@@ -2640,8 +2640,22 @@ app.post('/api/start-lab-session', async (req, res) => {
   try {
     const { subject, faculty, year, department, section, periods, startTime, expectedDuration } = req.body;
     
-    // Only clear incomplete lab sessions, NOT student sessions
-    console.log('🧹 Cleaning up incomplete lab sessions only...');
+    // 🗑️ NEW: Clear all old student sessions before starting new lab session
+    console.log('🧹 Clearing all old student sessions before starting new lab session...');
+    
+    // End all active student sessions and clear their data
+    const activeSessionsCount = await Session.countDocuments({ status: 'active' });
+    if (activeSessionsCount > 0) {
+      await Session.updateMany(
+        { status: 'active' }, 
+        { 
+          status: 'completed', 
+          logoutTime: new Date(),
+          endReason: 'New lab session started - auto logout'
+        }
+      );
+      console.log(`🗑️ Cleared ${activeSessionsCount} old student sessions`);
+    }
     
     // Clean up any incomplete lab sessions that might cause validation issues
     await LabSession.deleteMany({ 
@@ -2652,13 +2666,13 @@ app.post('/api/start-lab-session', async (req, res) => {
       ]
     });
     
-    // End any existing active lab sessions (but keep student sessions)
+    // End any existing active lab sessions
     await LabSession.updateMany(
       { status: 'active' },
       { status: 'completed', endTime: new Date() }
     );
     
-    console.log('✅ Ready to start new lab session (student sessions preserved)...');
+    console.log('✅ Ready to start new lab session (all old data cleared)...');
     
     // Create new lab session
     const newLabSession = new LabSession({

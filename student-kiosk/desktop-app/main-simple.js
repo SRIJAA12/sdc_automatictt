@@ -37,31 +37,31 @@ const SERVER_URL = loadServerUrl();
 const LAB_ID = process.env.LAB_ID || "CC1";
 const SYSTEM_NUMBER = process.env.SYSTEM_NUMBER || `CC1-${String(Math.floor(Math.random() * 10) + 1).padStart(2, '0')}`;
 
-// Kiosk mode configuration - DISABLED FOR TESTING
-const KIOSK_MODE = false; // 🧪 TESTING MODE - Set to true for deployment
-let isKioskLocked = false; // System starts unlocked for testing
+// Kiosk mode configuration - ENABLED for full blocking
+const KIOSK_MODE = true; // 🔒 ENABLED - full kiosk mode with blocking
+let isKioskLocked = true; // System starts locked
 
 function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   mainWindow = new BrowserWindow({
-    width: 1200,                             // 🧪 TESTING: Fixed width
-    height: 800,                             // 🧪 TESTING: Fixed height
-    frame: true,                             // 🧪 TESTING: Show frame
-    fullscreen: false,                       // 🧪 TESTING: Not fullscreen
-    alwaysOnTop: false,                      // 🧪 TESTING: Normal window
-    skipTaskbar: false,                      // 🧪 TESTING: Show in taskbar
-    kiosk: false,                            // 🧪 TESTING: Disable kiosk mode
-    resizable: true,                         // 🧪 TESTING: Allow resize
-    minimizable: true,                       // 🧪 TESTING: Allow minimize
-    closable: true,                          // 🧪 TESTING: Allow close
+    width: width,
+    height: height,
+    frame: false,                            // 🔒 No window frame for kiosk
+    fullscreen: true,                        // 🔒 Full screen mode
+    alwaysOnTop: true,
+    skipTaskbar: true,                       // 🔒 Hide from taskbar
+    kiosk: true,                            // 🔒 True kiosk mode
+    resizable: false,                        // 🔒 Cannot resize
+    minimizable: false,                      // 🔒 Cannot minimize
+    closable: false,                         // 🔒 Cannot close
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
       enableBlinkFeatures: 'GetDisplayMedia',
       webSecurity: false,
-      devTools: true                         // 🧪 TESTING: Enable DevTools
+      devTools: false                        // 🔒 Disable dev tools
     }
   });
 
@@ -81,21 +81,25 @@ function createWindow() {
 
   mainWindow.loadFile('student-interface.html');
   
-  console.log('🧪 TESTING MODE: DevTools enabled, normal window controls available');
+  console.log('🔒 Kiosk application starting in FULL BLOCKING mode...');
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
-    mainWindow.focus();
-    // 🧪 TESTING: No fullscreen, no always on top
+    mainWindow.setFullScreen(true);          // Force fullscreen
+    mainWindow.focus();                      // Force focus
     
-    console.log(`🧪 TESTING MODE - System: ${SYSTEM_NUMBER}, Lab: ${LAB_ID} - Server: ${SERVER_URL}`);
-    console.log('🔍 Press Ctrl+Shift+I to open DevTools');
+    console.log(`🔒 Application Ready - System: ${SYSTEM_NUMBER}, Lab: ${LAB_ID}`);
+    console.log(`🔒 Server: ${SERVER_URL}`);
+    console.log('🔒 FULL KIOSK MODE - All shortcuts blocked!');
   });
 
-  // 🧪 TESTING: Allow window closure
+  // Kiosk mode - prevent closing
   mainWindow.on('close', (e) => {
-    console.log('✅ Window closing (testing mode)');
-    // Don't prevent closing in testing mode
+    if (isKioskLocked) {
+      e.preventDefault();
+      console.log('🚫 Window close blocked - kiosk mode active');
+      mainWindow.focus(); // Force focus back
+    }
   });
 }
 
@@ -425,6 +429,55 @@ function setupIPCHandlers() {
       mainWindow.focus();
       
       console.log('🔒 System locked after logout');
+      
+      // 🔌 NEW: Automatic shutdown after session ends
+      console.log('🔌 Initiating automatic system shutdown after session end...');
+      
+      // Show notification dialog
+      setTimeout(() => {
+        dialog.showMessageBox(mainWindow, {
+          type: 'warning',
+          title: 'Automatic Shutdown',
+          message: 'Session Ended',
+          detail: 'System will automatically shutdown in 30 seconds.\n\nThank you for using the Lab Kiosk!',
+          buttons: ['OK']
+        });
+      }, 500);
+      
+      setTimeout(async () => {
+        const { exec } = require('child_process');
+        const platform = os.platform();
+        let shutdownCommand;
+        
+        if (platform === 'win32') {
+          shutdownCommand = 'shutdown /s /t 30 /c "Session ended. System will shutdown in 30 seconds."';
+        } else if (platform === 'linux') {
+          shutdownCommand = 'sudo shutdown -h +1 "Session ended. System shutting down."';
+        } else if (platform === 'darwin') {
+          shutdownCommand = 'sudo shutdown -h +1 "Session ended. System shutting down."';
+        }
+        
+        console.log(`🔌 Executing shutdown: ${shutdownCommand}`);
+        exec(shutdownCommand, (error, stdout, stderr) => {
+          if (error) {
+            console.error('❌ Shutdown error:', error.message);
+            console.error('Error details:', error);
+            
+            // Show error to user
+            dialog.showMessageBox(mainWindow, {
+              type: 'error',
+              title: 'Shutdown Failed',
+              message: 'Automatic Shutdown Error',
+              detail: `Could not initiate automatic shutdown.\nError: ${error.message}\n\nPlease shutdown manually.`,
+              buttons: ['OK']
+            });
+          } else {
+            console.log('✅ Automatic shutdown initiated');
+            if (stdout) console.log('Shutdown stdout:', stdout);
+            if (stderr) console.log('Shutdown stderr:', stderr);
+          }
+        });
+      }, 3000); // Wait 3 seconds after logout before shutdown
 
       return { success: true };
     } catch (error) {
@@ -558,12 +611,18 @@ app.whenReady().then(() => {
   setupIPCHandlers();
   createWindow();
   
-  // Block all keyboard shortcuts that could break kiosk mode
+  // 🔒 KIOSK MODE - Block all shortcuts including Alt+Tab
   blockKioskShortcuts();
 });
 
-app.on('window-all-closed', (e) => {
-  e.preventDefault();
+app.on('window-all-closed', () => {
+  // 🔒 KIOSK MODE - Prevent app from quitting
+  if (isKioskLocked) {
+    console.log('🚫 App quit blocked - kiosk mode active');
+    createWindow(); // Recreate window if closed
+  } else if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
 app.on('activate', () => {
@@ -593,7 +652,8 @@ function blockKioskShortcuts() {
     'Alt+F4',
     'CommandOrControl+W',
     'CommandOrControl+Q',
-    'Alt+Tab',
+    'Alt+Tab',                    // 🔒 Block Alt+Tab (main requirement)
+    'Alt+Shift+Tab',             // 🔒 Block reverse Alt+Tab
     'CommandOrControl+Tab',
     'F11',
     'Escape'
@@ -604,20 +664,52 @@ function blockKioskShortcuts() {
     'CommandOrControl+Alt+Delete',
     'CommandOrControl+Shift+Escape',
     'CommandOrControl+Escape',
-    'Alt+Space'
+    'Alt+Space',
+    'Super',                     // 🔒 Block Windows key
+    'Meta',                      // 🔒 Block Meta key
+    'CommandOrControl+R',        // 🔒 Block refresh
+    'F5',                        // 🔒 Block F5 refresh
+    'CommandOrControl+Shift+R',  // 🔒 Block hard refresh
+    'CommandOrControl+N',        // 🔒 Block new window
+    'CommandOrControl+T',        // 🔒 Block new tab
+    'CommandOrControl+Shift+N',  // 🔒 Block incognito
+    'CommandOrControl+L',        // 🔒 Block address bar focus
+    'CommandOrControl+D',        // 🔒 Block bookmark
+    'CommandOrControl+H',        // 🔒 Block history
+    'CommandOrControl+J',        // 🔒 Block downloads
+    'CommandOrControl+U',        // 🔒 Block view source
+    'CommandOrControl+P',        // 🔒 Block print
+    'CommandOrControl+S',        // 🔒 Block save
+    'CommandOrControl+O',        // 🔒 Block open file
+    'CommandOrControl+A',        // 🔒 Block select all
+    'CommandOrControl+F',        // 🔒 Block find
+    'CommandOrControl+G',        // 🔒 Block find next
+    'CommandOrControl+Z',        // 🔒 Block undo
+    'CommandOrControl+Y',        // 🔒 Block redo
+    'CommandOrControl+X',        // 🔒 Block cut
+    'CommandOrControl+C',        // 🔒 Block copy
+    'CommandOrControl+V'         // 🔒 Block paste
   ];
   
   const allShortcuts = [...devToolsShortcuts, ...windowShortcuts, ...systemShortcuts];
   
   allShortcuts.forEach(shortcut => {
-    globalShortcut.register(shortcut, () => {
-      console.log(`🚫 Blocked shortcut: ${shortcut}`);
-      // Do nothing - shortcut is blocked
-    });
+    try {
+      globalShortcut.register(shortcut, () => {
+        console.log(`🚫 Blocked shortcut: ${shortcut}`);
+        // Force focus back to main window
+        if (mainWindow && !mainWindow.isDestroyed()) {
+          mainWindow.focus();
+          mainWindow.setAlwaysOnTop(true);
+        }
+      });
+    } catch (error) {
+      console.log(`⚠️ Could not register shortcut: ${shortcut}`);
+    }
   });
   
-  console.log('🔒 Keyboard shortcuts blocked for kiosk mode');
-  console.log(`🚫 Blocked ${allShortcuts.length} shortcuts`);
+  console.log('🔒 FULL KIOSK MODE - All keyboard shortcuts blocked');
+  console.log(`🚫 Blocked ${allShortcuts.length} shortcuts including Alt+Tab`);
 }
 
 // Helper function for logout

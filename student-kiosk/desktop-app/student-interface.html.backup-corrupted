@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ðŸ”’ College Lab Kiosk</title>
+    <title>🔒 College Lab Kiosk</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -192,75 +192,13 @@
             font-size: 1rem;
             margin-top: 10px;
         }
-        
-        /* First-time Sign-in Styles */
-        .signin-card {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 100%;
-            margin: 20px auto;
-        }
-        .signin-card .card-header {
-            border-radius: 20px 20px 0 0;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            text-align: center;
-            padding: 30px;
-        }
-        .user-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-        .step-indicator {
-            background: rgba(40, 167, 69, 0.1);
-            border: 2px solid #28a745;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .btn-create {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            border: none;
-            border-radius: 15px;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-create:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
-            color: white;
-        }
-        .btn-back {
-            background: #6c757d;
-            border: none;
-            border-radius: 15px;
-            padding: 12px 25px;
-            color: white;
-        }
-        .btn-back:hover {
-            background: #5a6268;
-            color: white;
-        }
-        .password-requirements {
-            background: #e8f5e8;
-            border: 1px solid #28a745;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
     <!-- Loading Screen - Shows immediately, hides when app is ready -->
     <div id="loadingScreen">
         <div class="loading-spinner"></div>
-        <div class="loading-text">ðŸ”’ College Lab Kiosk</div>
+        <div class="loading-text">🔒 College Lab Kiosk</div>
         <div class="loading-subtext">Initializing secure system...</div>
     </div>
 
@@ -274,7 +212,7 @@
                 <div class="lock-icon mb-3">
                     <i class="fas fa-lock"></i>
                 </div>
-                <h2 class="mb-0"><strong>College Lab Registration System</strong></h2>
+                <h2 class="mb-0"><strong>🖥️ College Lab Registration System</strong></h2>
                 <p class="mb-0 mt-2">Secure Student Kiosk Access</p>
             </div>
             <div class="card-body p-4">
@@ -294,7 +232,7 @@
                             <strong>Current Time:</strong> <span id="currentTime" style="color: #28a745; font-weight: bold;">--:--:--</span>
                         </div>
                         <div class="col-md-6 mb-2">
-                            <strong>Kiosk Mode:</strong> <span class="badge bg-warning">ðŸ”’ ACTIVE</span>
+                            <strong>Kiosk Mode:</strong> <span class="badge bg-warning">🔒 ACTIVE</span>
                         </div>
                     </div>
                 </div>
@@ -330,24 +268,26 @@
                         <label class="form-label fw-bold"><i class="fas fa-key"></i> Password</label>
                         <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your Password" required autocomplete="off" />
                     </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fas fa-building"></i> Lab Name</label>
+                            <select class="form-select form-select-lg" id="labName" required onchange="updateSystemNumber()">
+                                <option value="">Select Lab</option>
+                                <option value="CC1">CC1 - Computer Center 1</option>
+                                <option value="CC2">CC2 - Computer Center 2</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="fas fa-desktop"></i> System Number</label>
+                            <select class="form-select form-select-lg" id="systemNumber" required disabled>
+                                <option value="">Select Lab First</option>
+                            </select>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-unlock btn-lg">
                         <i class="fas fa-unlock"></i> Unlock & Start Session
                     </button>
                     
-<<<<<<< HEAD
-                    <!-- NEW: Forgot Password Button -->
-                    <button type="button" class="btn btn-forgot btn-lg mt-3 w-100" onclick="showForgotPassword()">
-                        <i class="fas fa-key"></i> Forgot Password?
-                    </button>
-                    
-                    <!-- NEW: First-time Sign-in Info -->
-                    <div class="alert alert-info mt-2">
-                        <i class="fas fa-info-circle"></i>
-                        <strong>First-time Sign-in:</strong> 
-                        <a href="http://localhost:7401/student-signin/" target="_blank" class="alert-link">
-                            Complete setup online first
-                        </a>
-=======
                     <!-- Forgot Password & First-time Sign-in Buttons -->
                     <div class="row mt-3">
                         <div class="col-md-6">
@@ -360,7 +300,6 @@
                                 <i class="fas fa-key"></i> Forgot Password?
                             </button>
                         </div>
->>>>>>> a7e2422 (2 features not working)
                     </div>
                 </form>
 
@@ -387,97 +326,53 @@
 
     <!-- FIRST-TIME SIGN-IN PAGE -->
     <div id="firstTimeSignInPage" class="kiosk-container" style="display: none;">
-        <div class="signin-card">
-            <div class="card-header">
-                <div class="user-icon">
+        <div class="login-card">
+            <div class="card-header bg-warning text-dark text-center py-4">
+                <div class="lock-icon mb-3">
                     <i class="fas fa-user-plus"></i>
                 </div>
-                <h2 class="mb-0">First-time Sign-in</h2>
-                <p class="mb-0">Set up your password to access the lab system</p>
+                <h2 class="mb-0"><strong>👋 First-time Sign-in</strong></h2>
+                <p class="mb-0 mt-2">Set Up Your Password</p>
             </div>
-
             <div class="card-body p-4">
-                <!-- Step Indicator -->
-                <div class="step-indicator">
-                    <h5 class="text-success mb-2">
-                        <i class="fas fa-info-circle"></i> Getting Started
-                    </h5>
-                    <p class="mb-0">
-                        This is for students who are logging in for the first time. 
-                        You'll need your Student ID and registered email address to set up your password.
-                    </p>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> <strong>Welcome!</strong> Enter your Student ID and the one-time password provided by your admin, then create your permanent password.
                 </div>
 
                 <div id="firstTimeErrorAlert" class="alert alert-danger d-none" role="alert">
                     <i class="fas fa-exclamation-triangle"></i> <span id="firstTimeErrorMessage"></span>
                 </div>
 
-                <!-- First-time Sign-in Form -->
                 <form id="firstTimeForm">
-                    <div class="mb-3">
-                        <label for="firstTimeStudentId" class="form-label">
-                            <i class="fas fa-id-card"></i> Student ID (Roll Number)
-                        </label>
-                        <input type="text" class="form-control" id="firstTimeStudentId" 
-                               placeholder="Enter your Student ID (e.g., TEST2025001)" required autocomplete="off" spellcheck="false">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"><i class="fas fa-user"></i> Student ID</label>
+                        <input type="text" class="form-control form-control-lg" id="firstTimeStudentId" placeholder="Enter your Student ID" required autocomplete="off" spellcheck="false" />
                     </div>
-
-                    <div class="mb-3">
-                        <label for="firstTimeEmail" class="form-label">
-                            <i class="fas fa-envelope"></i> Email Address
-                        </label>
-                        <input type="email" class="form-control" id="firstTimeEmail" 
-                               placeholder="Enter your registered email address" required>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"><i class="fas fa-key"></i> One-Time Password (OTP)</label>
+                        <input type="text" class="form-control form-control-lg" id="firstTimeOTP" placeholder="Enter OTP from admin" required autocomplete="off" />
+                        <small class="text-muted">Contact your admin if you don't have this</small>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="firstTimeDateOfBirth" class="form-label">
-                            <i class="fas fa-calendar"></i> Date of Birth
-                        </label>
-                        <input type="date" class="form-control" id="firstTimeDateOfBirth" required>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"><i class="fas fa-lock"></i> Create New Password</label>
+                        <input type="password" class="form-control form-control-lg" id="firstTimeNewPassword" placeholder="Min 6 characters" required autocomplete="off" />
                     </div>
-
-                    <div class="mb-3">
-                        <label for="firstTimeNewPassword" class="form-label">
-                            <i class="fas fa-lock"></i> Create New Password
-                        </label>
-                        <input type="password" class="form-control" id="firstTimeNewPassword" 
-                               placeholder="Create a secure password" required autocomplete="off">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"><i class="fas fa-lock"></i> Confirm Password</label>
+                        <input type="password" class="form-control form-control-lg" id="firstTimeConfirmPassword" placeholder="Re-enter password" required autocomplete="off" />
                     </div>
-
-                    <div class="mb-3">
-                        <label for="firstTimeConfirmPassword" class="form-label">
-                            <i class="fas fa-lock"></i> Confirm Password
-                        </label>
-                        <input type="password" class="form-control" id="firstTimeConfirmPassword" 
-                               placeholder="Confirm your password" required autocomplete="off">
-                    </div>
-
-                    <div class="password-requirements">
-                        <h6 class="text-success mb-2">
-                            <i class="fas fa-shield-alt"></i> Password Requirements:
-                        </h6>
-                        <ul class="mb-0">
-                            <li>At least 6 characters long</li>
-                            <li>Can contain letters, numbers, and symbols</li>
-                            <li>Both passwords must match</li>
-                        </ul>
-                    </div>
-
-                    <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-create btn-lg">
-                            <i class="fas fa-user-check"></i> Create Account & Set Password
-                        </button>
-                        <button type="button" class="btn btn-back btn-lg" onclick="showLoginPage()">
-                            <i class="fas fa-arrow-left"></i> Back to Login
-                        </button>
-                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg w-100" style="color: #000; font-weight: bold;">
+                        <i class="fas fa-check"></i> Set Password & Complete Setup
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-lg mt-3 w-100" onclick="showLoginPage()">
+                        <i class="fas fa-arrow-left"></i> Back to Login
+                    </button>
                 </form>
 
                 <div class="debug-section mt-4">
                     <h6 class="text-muted mb-2"><i class="fas fa-bug"></i> Debug Console</h6>
                     <div id="firstTimeDebugLog" style="color: #6c757d;">
-                        First-time sign-in page loaded. Ready for account setup...
+                        First-time sign-in page ready...
                     </div>
                 </div>
             </div>
@@ -491,7 +386,7 @@
                 <div class="lock-icon mb-3">
                     <i class="fas fa-key"></i>
                 </div>
-                <h2 class="mb-0"><strong>ðŸ”‘ Reset Your Password</strong></h2>
+                <h2 class="mb-0"><strong>🔑 Reset Your Password</strong></h2>
                 <p class="mb-0 mt-2">Verify Email & Set New Password</p>
             </div>
             <div class="card-body p-4">
@@ -624,7 +519,7 @@
             const computerName = document.getElementById('computerName').textContent;
             const systemNumber = document.getElementById('systemNumberDisplay').textContent;
             
-            alert(`ðŸ–¥ï¸ System Information:
+            alert(`🖥️ System Information:
 
 Computer Name: ${computerName}
 System Number: ${systemNumber}
@@ -644,7 +539,7 @@ Server: Connected to Lab Management System`);
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(`âœ… Connection Test Successful!
+                        alert(`✅ Connection Test Successful!
 
 Server Status: Online
 Total Students: ${data.stats.totalStudents}
@@ -652,14 +547,14 @@ Students with Passwords: ${data.stats.passwordsSet}
 Pending Setup: ${data.stats.pendingPasswords}
 
 Connection: Working properly`);
-                        addDebugLog('âœ… Connection test successful');
+                        addDebugLog('✅ Connection test successful');
                     } else {
-                        alert('âš ï¸ Server responded but with errors');
-                        addDebugLog('âš ï¸ Server error in connection test');
+                        alert('⚠️ Server responded but with errors');
+                        addDebugLog('⚠️ Server error in connection test');
                     }
                 })
                 .catch(error => {
-                    alert(`âŒ Connection Test Failed:
+                    alert(`❌ Connection Test Failed:
 
 Error: ${error.message}
 
@@ -667,32 +562,32 @@ Please check:
 - Server is running
 - Network connection is working
 - Contact admin if problem persists`);
-                    addDebugLog(`âŒ Connection test failed: ${error.message}`);
+                    addDebugLog(`❌ Connection test failed: ${error.message}`);
                 });
         }
 
         function showHelp() {
-            alert(`ðŸ†˜ Lab Kiosk Help:
+            alert(`🆘 Lab Kiosk Help:
 
-ðŸ“ FIRST-TIME USERS:
+📝 FIRST-TIME USERS:
 1. Get your one-time password from admin
 2. Click "First-time Sign-in"
 3. Enter Student ID and one-time password
 4. Create your permanent password
 
-ðŸ”‘ EXISTING USERS:
+🔑 EXISTING USERS:
 1. Enter your Student ID and password
 2. Select your system number
 3. Click "Unlock & Start Session"
 
-â“ FORGOT PASSWORD:
+❓ FORGOT PASSWORD:
 1. Click "Forgot Password?"
 2. Enter Student ID (Roll Number)
 3. Enter your email address
 4. Check email for OTP code
 5. Enter OTP and create new password
 
-ðŸ“ž NEED HELP?
+📞 NEED HELP?
 Contact your lab administrator for assistance.`);
             
             addDebugLog('Help information displayed');
@@ -782,7 +677,7 @@ Contact your lab administrator for assistance.`);
             const credentials = {
                 studentId: document.getElementById('studentId').value.trim(),
                 password: document.getElementById('password').value,
-                systemNumber: document.getElementById('systemNumberDisplay').textContent,
+                systemNumber: document.getElementById('systemNumber').value,
             };
 
             addDebugLog(`Attempting login for ${credentials.studentId}...`);
@@ -791,7 +686,7 @@ Contact your lab administrator for assistance.`);
                 const result = await window.electronAPI.studentLogin(credentials);
 
                 if (result.success) {
-                    addDebugLog(`âœ… Login successful! Session: ${result.sessionId}`);
+                    addDebugLog(`✅ Login successful! Session: ${result.sessionId}`);
                     currentSessionId = result.sessionId;
 
                     document.getElementById('sessionStudentName').textContent = result.student.name;
@@ -807,13 +702,13 @@ Contact your lab administrator for assistance.`);
                 } else {
                     errorMessage.textContent = result.error || 'Login failed';
                     errorAlert.classList.remove('d-none');
-                    addDebugLog(`âŒ Login failed: ${result.error}`);
+                    addDebugLog(`❌ Login failed: ${result.error}`);
                 }
             } catch (error) {
                 console.error('Login error:', error);
                 errorMessage.textContent = 'An error occurred: ' + error.message;
                 errorAlert.classList.remove('d-none');
-                addDebugLog(`âŒ Login error: ${error.message}`);
+                addDebugLog(`❌ Login error: ${error.message}`);
             }
         });
 
@@ -834,7 +729,7 @@ Contact your lab administrator for assistance.`);
                 const result = await window.electronAPI.studentLogout();
 
                 if (result.success) {
-                    addDebugLog('âœ… Logout successful');
+                    addDebugLog('✅ Logout successful');
 
                     if (durationInterval) {
                         clearInterval(durationInterval);
@@ -849,12 +744,12 @@ Contact your lab administrator for assistance.`);
                     currentSessionId = null;
                 } else {
                     alert('Logout failed: ' + (result.error || 'Unknown error'));
-                    addDebugLog(`âŒ Logout failed: ${result.error}`);
+                    addDebugLog(`❌ Logout failed: ${result.error}`);
                 }
             } catch (error) {
                 console.error('Logout error:', error);
                 alert('Logout error: ' + error.message);
-                addDebugLog(`âŒ Logout error: ${error.message}`);
+                addDebugLog(`❌ Logout error: ${error.message}`);
             }
         });
 
@@ -863,7 +758,7 @@ Contact your lab administrator for assistance.`);
             if (connected) {
                 statusEl.className = 'connection-status status-connected';
                 statusEl.innerHTML = '<i class="fas fa-circle"></i> Connected';
-                addDebugLog('âœ… Socket connected');
+                addDebugLog('✅ Socket connected');
             } else {
                 statusEl.className = 'connection-status status-disconnected';
                 statusEl.innerHTML = '<i class="fas fa-circle"></i> Disconnected';
@@ -875,11 +770,11 @@ Contact your lab administrator for assistance.`);
         // Listen for timer close blocked notification
         if (window.electronAPI && window.electronAPI.onTimerCloseBlocked) {
             window.electronAPI.onTimerCloseBlocked(() => {
-                addDebugLog('âš ï¸ Timer close blocked - use Logout button');
+                addDebugLog('⚠️ Timer close blocked - use Logout button');
                 // Optional: Show a visual notification
                 const alertDiv = document.createElement('div');
                 alertDiv.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(220,53,69,0.95);color:white;padding:20px 40px;border-radius:10px;z-index:99999;font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5);';
-                alertDiv.innerHTML = '<strong>âš ï¸ Timer Cannot Be Closed</strong><br>You can only end the session by clicking the <strong>Logout button</strong>.';
+                alertDiv.innerHTML = '<strong>⚠️ Timer Cannot Be Closed</strong><br>You can only end the session by clicking the <strong>Logout button</strong>.';
                 document.body.appendChild(alertDiv);
                 setTimeout(() => {
                     if (alertDiv.parentElement) {
@@ -892,30 +787,27 @@ Contact your lab administrator for assistance.`);
         // Listen for timer logout trigger (when logout clicked from timer window)
         if (window.electronAPI && window.electronAPI.onTriggerLogout) {
             window.electronAPI.onTriggerLogout(() => {
-                addDebugLog('ðŸšª Logout triggered from timer window');
+                addDebugLog('🚪 Logout triggered from timer window');
                 // Trigger the logout button click
                 document.getElementById('logoutBtn').click();
             });
         }
 
-<<<<<<< HEAD
-        // NEW: Navigation Functions (removed - now using web-based system)
-
-        // NEW: Enhanced Forgot Password Functions with OTP verification
-        function showForgotPassword() {
-            addDebugLog('🔑 Forgot password initiated');
-            showForgotPasswordStep1();
-        }
-
-        function showForgotPasswordStep1() {
-            // Create modal dialog for student ID input
-            const modal = document.createElement('div');
-            modal.id = 'studentIdModal';
-            modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;pointer-events:auto;';
-            modal.innerHTML = `
+        // Navigation functions are now in kiosk-navigation.js
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                if (loadingScreen) {
+                    loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        if (loadingScreen.parentElement) {
+                            loadingScreen.parentElement.removeChild(loadingScreen);
                 <div style="background:white;padding:30px;border-radius:15px;max-width:400px;width:90%;position:relative;z-index:10000;pointer-events:auto;">
                     <h4>🆔 Enter Student ID</h4>
-                    <input type="text" id="fpStudentId" placeholder="Student ID (e.g., IT2021005)" tabindex="1" autocomplete="off" style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;">
+                    <input type="text" id="fpStudentId" placeholder="Student ID (e.g., IT2021005)" autofocus autocomplete="off" style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;">
                     <div style="display:flex;gap:10px;margin-top:20px;">
                         <button id="fpSIDCancelBtn" style="flex:1;padding:10px;background:#6c757d;color:white;border:none;border-radius:5px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Cancel</button>
                         <button id="fpSIDNextBtn" style="flex:1;padding:10px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Next</button>
@@ -923,8 +815,7 @@ Contact your lab administrator for assistance.`);
                 </div>
             `;
             document.body.appendChild(modal);
-            
-            // Improved focus strategy using requestAnimationFrame
+            // Aggressive focus with multiple attempts
             const activateInput = () => {
                 const input = document.getElementById('fpStudentId');
                 if (input) {
@@ -937,22 +828,11 @@ Contact your lab administrator for assistance.`);
                 }
             };
             
-            // Immediate attempt
-            activateInput();
-            
-            // Wait for next browser paint cycle (most reliable)
-            requestAnimationFrame(() => {
-                activateInput();
-                // Double-check after paint
-                requestAnimationFrame(() => {
-                    activateInput();
-                });
-            });
-            
-            // Additional fallback attempts
+            // Try multiple times to ensure it works
             setTimeout(activateInput, 50);
-            setTimeout(activateInput, 150);
-            setTimeout(activateInput, 300);
+            setTimeout(activateInput, 100);
+            setTimeout(activateInput, 200);
+            setTimeout(activateInput, 500);
             
             // Add button event listeners
             setTimeout(() => {
@@ -978,27 +858,11 @@ Contact your lab administrator for assistance.`);
                 }
                 
                 if (input) {
-                    // Make input immediately responsive to any interaction
-                    input.addEventListener('mousedown', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                    });
-                    
-                    input.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                        this.select();
-                    });
-                    
                     input.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             submitStudentId();
                         }
                     });
-                    
-                    // Force immediate focus
-                    input.focus();
-                    input.click();
                 }
             }, 100);
         }
@@ -1021,7 +885,7 @@ Contact your lab administrator for assistance.`);
                     <h4>📧 Enter Email Address</h4>
                     <p><strong>Student:</strong> ${studentName}<br>
                     <strong>Registered:</strong> ${maskedEmail}</p>
-                    <input type="email" id="fpEmail" placeholder="Enter your complete email address" tabindex="1" autocomplete="off" style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;">
+                    <input type="email" id="fpEmail" placeholder="Enter your complete email address" autofocus autocomplete="off" style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;">
                     <div style="display:flex;gap:10px;margin-top:20px;">
                         <button id="fpEmailCancelBtn" style="flex:1;padding:10px;background:#6c757d;color:white;border:none;border-radius:5px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Cancel</button>
                         <button id="fpEmailSendBtn" style="flex:1;padding:10px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Send OTP</button>
@@ -1029,8 +893,7 @@ Contact your lab administrator for assistance.`);
                 </div>
             `;
             document.body.appendChild(modal);
-            
-            // Improved focus strategy using requestAnimationFrame
+            // Aggressive focus with multiple attempts
             const activateInput = () => {
                 const input = document.getElementById('fpEmail');
                 if (input) {
@@ -1042,22 +905,10 @@ Contact your lab administrator for assistance.`);
                 }
             };
             
-            // Immediate attempt
-            activateInput();
-            
-            // Wait for next browser paint cycle (most reliable)
-            requestAnimationFrame(() => {
-                activateInput();
-                // Double-check after paint
-                requestAnimationFrame(() => {
-                    activateInput();
-                });
-            });
-            
-            // Additional fallback attempts
             setTimeout(activateInput, 50);
-            setTimeout(activateInput, 150);
-            setTimeout(activateInput, 300);
+            setTimeout(activateInput, 100);
+            setTimeout(activateInput, 200);
+            setTimeout(activateInput, 500);
             
             // Add button event listeners
             setTimeout(() => {
@@ -1083,27 +934,11 @@ Contact your lab administrator for assistance.`);
                 }
                 
                 if (input) {
-                    // Make input immediately responsive to any interaction
-                    input.addEventListener('mousedown', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                    });
-                    
-                    input.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                        this.select();
-                    });
-                    
                     input.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             submitEmail(studentId, studentName);
                         }
                     });
-                    
-                    // Force immediate focus
-                    input.focus();
-                    input.click();
                 }
             }, 100);
         }
@@ -1125,7 +960,11 @@ Contact your lab administrator for assistance.`);
 
         async function initiateForgotPassword(studentId) {
             try {
-                const response = await fetch('http://localhost:7401/api/forgot-password-initiate', {
+                // Get dynamic server URL from renderer
+                const apiUrl = serverUrl ? `${serverUrl}/api/forgot-password-initiate` : '/api/forgot-password-initiate';
+                addDebugLog(`📡 Calling API: ${apiUrl}`);
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ studentId })
@@ -1159,7 +998,11 @@ Please check:
             try {
                 addDebugLog(`📧 Sending OTP to email: ${email}`);
                 
-                const response = await fetch('http://localhost:7401/api/forgot-password-send-otp', {
+                // Get dynamic server URL from renderer
+                const apiUrl = serverUrl ? `${serverUrl}/api/forgot-password-send-otp` : '/api/forgot-password-send-otp';
+                addDebugLog(`📡 Calling API: ${apiUrl}`);
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ studentId, email })
@@ -1209,9 +1052,9 @@ Please check:
         function showOTPInput(studentId, email, studentName) {
             const modal = document.createElement('div');
             modal.id = 'otpModal';
-            modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;pointer-events:auto;';
+            modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:99999;pointer-events:auto;';
             modal.innerHTML = `
-                <div style="background:white;padding:30px;border-radius:15px;max-width:500px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.3);position:relative;z-index:10000;pointer-events:auto;">
+                <div style="background:white;padding:30px;border-radius:15px;max-width:500px;width:90%;position:relative;z-index:100000;pointer-events:auto;">
                     <h4 style="color:#28a745;margin-bottom:20px;">🔐 Enter OTP & New Password</h4>
                     <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin-bottom:20px;">
                         <p style="margin:0;"><strong>Student:</strong> ${studentName}<br>
@@ -1221,153 +1064,79 @@ Please check:
                     <div style="margin-bottom:15px;">
                         <label style="display:block;margin-bottom:5px;font-weight:bold;color:#333;">6-Digit OTP Code:</label>
                         <input type="text" id="fpOTP" placeholder="000000" maxlength="6" tabindex="1"
-                               style="width:100%;padding:15px;font-size:18px;text-align:center;letter-spacing:3px;border:2px solid #28a745;border-radius:8px;background:#fff;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;"
-                               autocomplete="off" spellcheck="false">
+                               oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value.length===6) document.getElementById('fpNewPassword').focus();"
+                               style="width:100%;padding:15px;font-size:20px;border:2px solid #28a745;border-radius:8px;text-align:center;pointer-events:auto;user-select:text;-webkit-user-select:text;">
                         <small style="color:#666;display:block;margin-top:5px;">📧 Check your email for the OTP code</small>
                     </div>
                     
                     <div style="margin-bottom:20px;">
                         <label style="display:block;margin-bottom:5px;font-weight:bold;color:#333;">New Password:</label>
                         <input type="password" id="fpNewPassword" placeholder="Enter new password (min 6 chars)" tabindex="2"
-                               style="width:100%;padding:15px;font-size:16px;border:2px solid #ddd;border-radius:8px;position:relative;z-index:10001;pointer-events:auto;user-select:text;-webkit-user-select:text;">
+                               onkeypress="if(event.key==='Enter') document.getElementById('fpResetBtn').click();"
+                               style="width:100%;padding:15px;font-size:16px;border:2px solid #ddd;border-radius:8px;pointer-events:auto;user-select:text;-webkit-user-select:text;">
                     </div>
                     
                     <div style="display:flex;gap:10px;margin-top:20px;">
-                        <button id="fpCancelBtn" 
-                                style="flex:1;padding:15px;background:#6c757d;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Cancel</button>
-                        <button id="fpResetBtn" 
-                                style="flex:1;padding:15px;background:#28a745;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;position:relative;z-index:10001;pointer-events:auto;">Reset Password</button>
+                        <button id="fpCancelBtn" tabindex="4"
+                                onclick="closeOTPModal();"
+                                style="flex:1;padding:15px;background:#dc3545;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;">Cancel</button>
+                        <button id="fpResetBtn" tabindex="3"
+                                style="flex:1;padding:15px;background:#28a745;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;">Reset Password</button>
                     </div>
                 </div>
             `;
             document.body.appendChild(modal);
             
-            // Improved focus strategy using requestAnimationFrame
+            // Force focus after modal is visible - AGGRESSIVE APPROACH
             const activateOTPInput = () => {
                 const otpInput = document.getElementById('fpOTP');
-                const passwordInput = document.getElementById('fpNewPassword');
-                
                 if (otpInput) {
-                    // Force focus and make it responsive
                     otpInput.focus();
                     otpInput.click();
                     otpInput.select();
                     otpInput.removeAttribute('readonly');
                     otpInput.removeAttribute('disabled');
-                    
-                    // Add better event handlers (only once)
-                    if (!otpInput.hasAttribute('data-handlers-added')) {
-                        otpInput.setAttribute('data-handlers-added', 'true');
-                        
-                        otpInput.addEventListener('input', function(e) {
-                            // Only allow numbers
-                            this.value = this.value.replace(/[^0-9]/g, '');
-                            
-                            // Auto-advance to password field when 6 digits entered
-                            if (this.value.length === 6 && passwordInput) {
-                                setTimeout(() => passwordInput.focus(), 100);
-                            }
-                        });
-                        
-                        // Handle paste events
-                        otpInput.addEventListener('paste', function(e) {
-                            setTimeout(() => {
-                                this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6);
-                                if (this.value.length === 6 && passwordInput) {
-                                    setTimeout(() => passwordInput.focus(), 100);
-                                }
-                            }, 10);
-                        });
-                        
-                        // Handle mousedown and click to ensure focus
-                        otpInput.addEventListener('mousedown', function(e) {
-                            e.stopPropagation();
-                            this.focus();
-                        });
-                        
-                        otpInput.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            this.focus();
-                            this.select();
-                        });
-                    }
-                }
-                
-                // Make password field more responsive
-                if (passwordInput && !passwordInput.hasAttribute('data-handlers-added')) {
-                    passwordInput.setAttribute('data-handlers-added', 'true');
-                    
-                    // Handle mousedown and click to ensure focus
-                    passwordInput.addEventListener('mousedown', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                    });
-                    
-                    passwordInput.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.focus();
-                    });
-                    
-                    passwordInput.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            submitOTPAndPassword('${studentId}', '${email}', '${studentName}');
-                        }
-                    });
-                    
-                    passwordInput.removeAttribute('readonly');
-                    passwordInput.removeAttribute('disabled');
+                    console.log('✅ OTP input focused');
                 }
             };
             
-            // Immediate attempt
-            activateOTPInput();
-            
-            // Wait for next browser paint cycle (most reliable)
-            requestAnimationFrame(() => {
-                activateOTPInput();
-                // Double-check after paint
-                requestAnimationFrame(() => {
-                    activateOTPInput();
-                });
-            });
-            
-            // Additional fallback attempts
+            // Multiple attempts with increasing delays to ensure focus works
             setTimeout(activateOTPInput, 50);
+            setTimeout(activateOTPInput, 100);
             setTimeout(activateOTPInput, 150);
+            setTimeout(activateOTPInput, 200);
             setTimeout(activateOTPInput, 300);
             
-            // Add button event listeners
+            // Add click handler to modal for refocusing
             setTimeout(() => {
-                const cancelBtn = document.getElementById('fpCancelBtn');
+                const modalEl = document.getElementById('otpModal');
+                if (modalEl) {
+                    modalEl.addEventListener('click', function(e) {
+                        // Only refocus if clicking on the modal background, not the content
+                        if (e.target === modalEl) {
+                            activateOTPInput();
+                        }
+                    });
+                }
+            }, 50);
+            
+            // Add Reset button click handler
+            setTimeout(() => {
                 const resetBtn = document.getElementById('fpResetBtn');
-                
-                if (cancelBtn) {
-                    cancelBtn.addEventListener('click', function() {
-                        console.log('Cancel button clicked');
-                        const modal = document.getElementById('otpModal');
-                        if (modal && modal.parentElement) {
-                            modal.parentElement.removeChild(modal);
-                        }
-                    });
-                }
-                
                 if (resetBtn) {
-                    resetBtn.addEventListener('click', function() {
-                        console.log('Reset button clicked');
+                    resetBtn.onclick = function() {
                         submitOTPAndPassword(studentId, email, studentName);
-                    });
+                    };
                 }
-                
-                // Also allow Enter key on password field
-                const passwordInput = document.getElementById('fpNewPassword');
-                if (passwordInput) {
-                    passwordInput.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            submitOTPAndPassword(studentId, email, studentName);
-                        }
-                    });
-                }
-            }, 100);
+            }, 50);
+        }
+        
+        // Helper function to close OTP modal
+        function closeOTPModal() {
+            const modal = document.getElementById('otpModal');
+            if (modal && modal.parentElement) {
+                modal.parentElement.removeChild(modal);
+            }
         }
         
         function submitOTPAndPassword(studentId, email, studentName) {
@@ -1404,7 +1173,11 @@ Please check:
             try {
                 addDebugLog(`🔄 Verifying OTP and resetting password for: ${studentId}`);
                 
-                const response = await fetch('http://localhost:7401/api/forgot-password-verify-otp', {
+                // Get dynamic server URL from renderer
+                const apiUrl = serverUrl ? `${serverUrl}/api/forgot-password-verify-otp` : '/api/forgot-password-verify-otp';
+                addDebugLog(`📡 Calling API: ${apiUrl}`);
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -1473,12 +1246,7 @@ Please check:
                 addDebugLog(`❌ Network error: ${error.message}`);
             }
         }
-        // Enhanced input field responsiveness
-=======
-        // Navigation functions are now in kiosk-navigation.js
-        
         // Initialize page
->>>>>>> a7e2422 (2 features not working)
         document.addEventListener('DOMContentLoaded', function() {
             // Hide loading screen
             setTimeout(() => {
@@ -1505,11 +1273,37 @@ Please check:
                 const studentIdInput = document.getElementById('studentId');
                 if (studentIdInput) {
                     studentIdInput.focus();
-                    console.log('âœ… Student ID field focused');
+                    console.log('✅ Student ID field focused');
                 }
             }, 1000);
         });
 
+        // Update system number dropdown based on lab selection
+        function updateSystemNumber() {
+            const labName = document.getElementById('labName').value;
+            const systemSelect = document.getElementById('systemNumber');
+            
+            // Clear existing options
+            systemSelect.innerHTML = '';
+            
+            if (!labName) {
+                systemSelect.disabled = true;
+                systemSelect.innerHTML = '<option value="">Select Lab First</option>';
+                return;
+            }
+            
+            systemSelect.disabled = false;
+            systemSelect.innerHTML = '<option value="">Select System Number</option>';
+            
+            // Add options 1-69 for selected lab
+            for (let i = 1; i <= 69; i++) {
+                const systemNumber = `${labName}-${String(i).padStart(2, '0')}`;
+                const option = document.createElement('option');
+                option.value = systemNumber;
+                option.textContent = systemNumber;
+                systemSelect.appendChild(option);
+            }
+        }
 
     </script>
 </body>
